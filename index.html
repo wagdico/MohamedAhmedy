@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>متجر وجدي للمواد الغذائية</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #13965a;
+      --secondary-color: #f8b400;
+      --accent-color: #e74c3c;
+      --bg-color: #f9f9f9;
+      --text-color: #333;
+      --border-radius: 12px;
+    }
+    
+    * {
+      font-family: 'Cairo';
+      transition: all 0.3s ease;
+    }
+    
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      overflow-x: hidden;
+    }
+    
+    .header-shadow {
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .main-btn {
+      background-color: var(--primary-color);
+      color: white;
+      border-radius: var(--border-radius);
+      padding: 0.7rem 1.5rem;
+      font-weight: bold;
+      transition: transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 4px 10px rgba(19, 150, 90, 0.3);
+    }
+    
+    .main-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(19, 150, 90, 0.4);
+    }
+    
+    .secondary-btn {
+      background-color: var(--secondary-color);
+      color: var(--text-color);
+      border-radius: var(--border-radius);
+      padding: 0.7rem 1.5rem;
+      font-weight: bold;
+      transition: transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 4px 10px rgba(248, 180, 0, 0.3);
+    }
+    
+    .secondary-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(248, 180, 0, 0.4);
+    }
+    
+    .accent-btn {
+      background-color: var(--accent-color);
+      color: white;
+      border-radius: var(--border-radius);
+      padding: 0.7rem 1.5rem;
+      font-weight: bold;
+      transition: transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 4px 10px rgba(231, 76, 60, 0.3);
+    }
+    
+    .accent-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(231, 76, 60, 0.4);
+    }
+    
+    .card {
+      background: white;
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    }
+    
+    .product-card {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+    }
+    
+    .product-card img {
+      height: 180px;
+      object-fit: cover;
+      border-top-right-radius: var(--border-radius);
+      border-top-left-radius: var(--border-radius);
+    }
+    
+    .product-info {
+      padding: 1rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    
+    .product-title {
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      color: var(--primary-color);
+    }
+    
+    .product-price {
+      color: var(--accent-color);
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+    
+    .product-description {
+      margin-bottom: 1rem;
+      color: #666;
+      font-size: 0.9rem;
+    }
+    
+    input:focus, select:focus, textarea:focus {
+      outline: 2px solid var(--primary-color);
+      border-color: var(--primary-color);
+    }
+    
+    .form-input {
+      border: 2px solid #ddd;
+      border-radius: var(--border-radius);
+      padding: 0.8rem 1rem;
+      width: 100%;
+      font-size: 1rem;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    
+    .form-input:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(19, 150, 90, 0.2);
+    }
+    
+    .nav-link {
+      position: relative;
+      padding-bottom: 5px;
+    }
+    
+    .nav-link:after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      right: 0;
+      background-color: var(--primary-color);
+      transition: width 0.3s;
+    }
+    
+    .nav-link:hover:after, .nav-link.active:after {
+      width: 100%;
+    }
+    
+    .cart-badge {
+      position: absolute;
+      top: -8px;
+      left: -8px;
+      background-color: var(--accent-color);
+      color: white;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+    }
+    
+    .section-title {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 2rem;
+      color: var(--primary-color);
+      font-weight: bold;
+    }
+    
+    .section-title:after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      right: 0;
+      width: 50%;
+      height: 4px;
+      background-color: var(--secondary-color);
+      border-radius: 2px;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .animate-fadeIn {
+      animation: fadeIn 0.5s ease forwards;
+    }
+    
+    .section {
+      opacity: 0;
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      transform: translateY(20px);
+    }
+    
+    .section.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .media-preview {
+      width: 100%;
+      max-width: 300px;
+      height: auto;
+      border-radius: var(--border-radius);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      margin: 1rem auto;
+      display: block;
+    }
+    
+    .timer {
+      font-family: monospace;
+      font-size: 1.2rem;
+      margin: 0 1rem;
+    }
+    
+    .cart-item {
+      border-bottom: 1px solid #eee;
+      padding: 1rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .cart-item:last-child {
+      border-bottom: none;
+    }
+    
+    .progress-container {
+      width: 100%;
+      height: 5px;
+      background-color: #f1f1f1;
+      border-radius: 3px;
+      margin-top: 1rem;
+    }
+    
+    .progress-bar {
+      height: 100%;
+      background-color: var(--primary-color);
+      border-radius: 3px;
+      transition: width 0.3s ease;
+    }
+    
+    /* Enhanced Mobile Styles */
+    @media (max-width: 640px) {
+      .container {
+        padding: 0.5rem;
+      }
+  
+      .product-grid {
+        grid-template-columns: repeat(1, 1fr);
+        gap: 1rem;
+      }
+  
+      .product-card img {
+        height: 150px;
+      }
+  
+      .product-title {
+        font-size: 1rem;
+      }
+  
+      .main-btn, .secondary-btn, .accent-btn {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+      }
+      
+      .section-title {
+        font-size: 1.3rem;
+      }
+      
+      .form-input {
+        padding: 0.7rem;
+      }
+      
+      .card {
+        border-radius: 10px;
+      }
+      
+      .sticky-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: white;
+        box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+        z-index: 1000;
+        border-top-right-radius: var(--border-radius);
+        border-top-left-radius: var(--border-radius);
+        padding: 0.5rem;
+      }
+    }
+    
+    /* Shimmer Effect for Loading States */
+    .shimmer {
+      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+      border-radius: var(--border-radius);
+    }
+    
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    
+    /* Float Animation for Cart Icon */
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-5px); }
+      100% { transform: translateY(0px); }
+    }
+    
+    .cart-float {
+      animation: float 2s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body class="min-h-screen">
+  <!-- Header -->
+  <header class="bg-white header-shadow sticky top-0 z-50">
+    <div class="container mx-auto p-4">
+      <div class="flex justify-between items-center">
+        <h1 class="text-2xl font-bold text-primary-600">
+          <i class="fas fa-store ml-2 text-green-600"></i>
+          متجر وجدي للمواد الغذائية
+        </h1>
+        <div class="relative">
+          <button id="cart-btn" class="text-xl p-2 relative cart-float">
+            <i class="fas fa-shopping-cart text-green-600"></i>
+            <span id="cart-badge" class="cart-badge">0</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container mx-auto p-4 mb-20">
+    <!-- Navigation Steps (Removed Verification Step) -->
+    <div id="steps-container" class="mb-8 overflow-x-auto whitespace-nowrap py-2 hidden md:block">
+      <div class="flex justify-between">
+        <div id="step1" class="step flex-1 text-center active">
+          <div class="mx-auto w-8 h-8 rounded-full bg-green-600 text-white flex items-center justify-center mb-1">1</div>
+          <span>تسجيل الدخول</span>
+        </div>
+        <div class="border-t-2 border-gray-300 flex-1 self-center"></div>
+        <div id="step2" class="step flex-1 text-center">
+          <div class="mx-auto w-8 h-8 rounded-full bg-gray-300 text-gray-600 flex items-center justify-center mb-1">2</div>
+          <span>اختيار المنتجات</span>
+        </div>
+        <div class="border-t-2 border-gray-300 flex-1 self-center"></div>
+        <div id="step3" class="step flex-1 text-center">
+          <div class="mx-auto w-8 h-8 rounded-full bg-gray-300 text-gray-600 flex items-center justify-center mb-1">3</div>
+          <span>السلة</span>
+        </div>
+        <div class="border-t-2 border-gray-300 flex-1 self-center"></div>
+        <div id="step4" class="step flex-1 text-center">
+          <div class="mx-auto w-8 h-8 rounded-full bg-gray-300 text-gray-600 flex items-center justify-center mb-1">4</div>
+          <span>إتمام الطلب</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Login Section -->
+    <section id="login-section" class="section active bg-white p-6 rounded-lg shadow-md mb-8">
+      <h2 class="section-title text-2xl">تسجيل الدخول</h2>
+      <form id="login-form" class="space-y-4">
+        <div>
+          <label for="name" class="block mb-2 font-medium">الاسم الكامل</label>
+          <input type="text" id="name" name="name" class="form-input" placeholder="أدخل اسمك الكامل" required>
+        </div>
+        <div>
+          <label for="phone" class="block mb-2 font-medium">رقم الهاتف</label>
+          <input type="tel" id="phone" name="phone" class="form-input" placeholder="مثال: 01288305521" required>
+        </div>
+        <div class="pt-4">
+          <button type="submit" class="main-btn w-full">
+            <i class="fas fa-arrow-left ml-2"></i>
+            متابعة
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Products Section (Now includes search bar and notes area) -->
+    <section id="products-section" class="section bg-white p-6 rounded-lg shadow-md mb-8" style="display: none;">
+      <h2 class="section-title text-2xl">اختيار المنتجات</h2>
+      <!-- Search and Notes Area -->
+      <div class="mb-6">
+        <div class="flex items-center space-x-2">
+          <input type="text" id="product-search" class="form-input" placeholder="ابحث عن منتج">
+          <button id="voice-search-btn" class="secondary-btn">
+            <i class="fas fa-microphone"></i>
+          </button>
+        </div>
+        <div class="mt-4">
+          <label for="order-notes" class="block mb-2 font-medium">ملاحظات على الطلب (اكتب أو سجل صوتاً)</label>
+          <textarea id="order-notes" class="form-input" rows="3" placeholder="اكتب ملاحظاتك هنا..."></textarea>
+          <button id="voice-note-btn" class="secondary-btn mt-2">
+            <i class="fas fa-microphone"></i>
+            سجل ملاحظة صوتية
+          </button>
+        </div>
+      </div>
+      
+      <!-- Product Grid -->
+      <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <!-- Products will be loaded here -->
+      </div>
+      
+      <div class="flex justify-between mt-6">
+        <button id="continue-to-cart" class="main-btn">
+          <i class="fas fa-shopping-cart ml-2"></i>
+          عرض السلة
+          <span id="cart-count" class="ml-1">(0)</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Cart Section -->
+    <section id="cart-section" class="section bg-white p-6 rounded-lg shadow-md mb-8" style="display: none;">
+      <h2 class="section-title text-2xl">سلة التسوق</h2>
+      
+      <div id="cart-empty" class="text-center py-8">
+        <i class="fas fa-shopping-cart text-gray-300 text-5xl mb-4"></i>
+        <p class="text-xl text-gray-500">السلة فارغة</p>
+        <button id="start-shopping" class="main-btn mt-4">ابدأ التسوق الآن</button>
+      </div>
+      
+      <div id="cart-items" class="divide-y">
+        <!-- Cart items will be loaded here -->
+      </div>
+      
+      <div id="cart-summary" class="mt-6 border-t-2 pt-4" style="display: none;">
+        <div class="flex justify-between items-center text-lg font-bold">
+          <span>المجموع:</span>
+          <span id="cart-total">0 جنيه</span>
+        </div>
+      </div>
+      
+      <div class="flex justify-between mt-6">
+        <button id="back-to-products" class="secondary-btn">
+          <i class="fas fa-arrow-right ml-2"></i>
+          رجوع للمنتجات
+        </button>
+        <button id="proceed-to-checkout" class="main-btn" disabled>
+          <i class="fas fa-check ml-2"></i>
+          إتمام الطلب
+        </button>
+      </div>
+    </section>
+
+    <!-- Order Confirmation Section -->
+    <section id="order-confirmation" class="section bg-white p-6 rounded-lg shadow-md mb-8" style="display: none;">
+      <h2 class="section-title text-2xl">تأكيد الطلب</h2>
+      
+      <div class="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
+        <h3 class="text-lg font-bold text-green-800 mb-2">معلومات العميل</h3>
+        <p id="confirmation-name" class="mb-1">الاسم: </p>
+        <p id="confirmation-phone" class="mb-1">رقم الهاتف: </p>
+      </div>
+      
+      <h3 class="text-lg font-bold mb-3">ملخص الطلب</h3>
+      <div id="order-items" class="divide-y mb-4">
+        <!-- Order items will be displayed here -->
+      </div>
+      
+      <div class="flex justify-between items-center text-lg font-bold border-t-2 pt-4">
+        <span>المجموع النهائي:</span>
+        <span id="order-total">0 جنيه</span>
+      </div>
+      
+      <p class="mt-6 text-sm text-gray-600">
+        بالضغط على زر "إرسال الطلب"، سيتم إرسال تفاصيل طلبك عبر واتساب إلى رقم المتجر.
+      </p>
+      
+      <div class="flex justify-between mt-6">
+        <button id="back-to-cart" class="secondary-btn">
+          <i class="fas fa-arrow-right ml-2"></i>
+          رجوع للسلة
+        </button>
+        <button id="send-order" class="main-btn">
+          <i class="fab fa-whatsapp ml-2"></i>
+          إرسال الطلب
+        </button>
+      </div>
+    </section>
+
+    <!-- Order Success Section -->
+    <section id="order-success" class="section bg-white p-6 rounded-lg shadow-md mb-8" style="display: none;">
+      <div class="text-center">
+        <div class="h-24 w-24 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4">
+          <i class="fas fa-check text-green-600 text-4xl"></i>
+        </div>
+        <h2 class="text-2xl font-bold text-green-700 mb-3">تم إرسال طلبك بنجاح!</h2>
+        <p class="mb-4">سيتم التواصل معك قريباً لتأكيد الطلب</p>
+        <button id="new-order" class="main-btn mt-4">طلب جديد</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Mobile Navigation (Removed verification step) -->
+  <nav class="sticky-nav flex justify-around items-center py-2 md:hidden">
+    <button id="nav-login" class="nav-step-btn text-center flex flex-col items-center" data-step="login-section">
+      <i class="fas fa-user-circle text-xl text-green-600"></i>
+      <span class="text-xs mt-1">الحساب</span>
+    </button>
+    <button id="nav-products" class="nav-step-btn text-center flex flex-col items-center" data-step="products-section">
+      <i class="fas fa-store text-xl text-gray-400"></i>
+      <span class="text-xs mt-1">المنتجات</span>
+    </button>
+    <button id="nav-cart" class="nav-step-btn text-center flex flex-col items-center" data-step="cart-section">
+      <i class="fas fa-shopping-cart text-xl text-gray-400"></i>
+      <span class="text-xs mt-1">السلة</span>
+    </button>
+  </nav>
+
+  <script>
+    // App State
+    const state = {
+      currentSection: 'login-section',
+      userData: {
+        name: '',
+        phone: ''
+      },
+      cart: []
+    };
+
+    // Sample Product Data
+    const products = [
+      {
+        id: 1,
+        name: 'بسكويت دوني 2ج',
+        price: 225,
+        image: 'بسكويت دوني 2 ج.jpg',
+        description: 'بسكويت سادة دوني 5 قطع ب 2 جنيه',
+        category: 'bisco'
+      },
+      {
+        id: 2,
+        name: 'ببسي ستار 5 ج',
+        price: 46,
+        image: 'ببسي ستار.jpg',
+        description: 'ببسي ستار كولا ب 5 جنيه',
+        category: 'pepsi'
+      },
+      {
+        id: 3,
+        name: 'كيك امينة ب 5 ج',
+        price: 275,
+        image: 'كيكة امينة.jpg',
+        description: 'كيك امينة اطعمة ب 5 جنيه',
+        category: 'cake'
+      },
+      {
+        id: 4,
+        name: 'ببسي تروبي كولا 5 ج',
+        price: 45,
+        image: 'ببسي تروبي.jpg',
+        description: 'ببسي تروبي ب 5 جنيه',
+        category: 'pepsi'
+      },
+      {
+        id: 5,
+        name: 'بسكويت تريبل تي 5 ج',
+        price: 275,
+        image: 'تريبل تي.jpg',
+        description: 'بسكويت تريبل تي اطعم 5 جنيه',
+        category: 'cake'
+      },
+      {
+        id: 6,
+        name: 'بسكويت بسكوتة 5 ج',
+        price: 275,
+        image: 'بسكويت بسكوتة.jpg',
+        description: 'بسكويت بسكوتة سادة ب 5 جنيه',
+        category: 'bisco'
+      },
+      {
+        id: 7,
+        name: 'لوليتا سميلي ب 1 ج',
+        price: 45,
+        image: 'لوليتا سميلي.jpg',
+        description: 'لوليتا سميلي ب 1 جنيه اطعم',
+        category: 'lolita'
+      },
+      {
+        id: 8,
+        name: 'بطاطس',
+        price: 20,
+        image: 'https://cdn.jsdelivr.net/gh/persianturtle/images/potato.jpg',
+        description: 'بطاطس طازجة من أفضل المزارع',
+        category: 'vegetables'
+      },
+      {
+        id: 9,
+        name: 'كيك شوكولاتة',
+        price: 70,
+        image: 'https://cdn.jsdelivr.net/gh/persianturtle/images/chocolate-cake.jpg',
+        description: 'كيك شوكولاتة لذيذ وطازج',
+        category: 'bakery'
+      }
+    ];
+
+    document.addEventListener('DOMContentLoaded', function() {
+      initApp();
+    });
+
+    // Initialize App
+    function initApp() {
+      renderProducts(products);
+      setupEventListeners();
+      updateCartBadge();
+      updateActiveStep('login-section');
+    }
+
+    // Setup Event Listeners
+    function setupEventListeners() {
+      // Login Form Submission
+      document.getElementById('login-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const name = document.getElementById('name').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        if (name && phone) {
+          state.userData.name = name;
+          state.userData.phone = phone;
+          changeSection('products-section');
+        }
+      });
+
+      // Search input keyup event
+      document.getElementById('product-search').addEventListener('keyup', function() {
+        const term = this.value.toLowerCase();
+        const filtered = products.filter(p =>
+        p.name.toLowerCase().includes(term) || p.description.toLowerCase
